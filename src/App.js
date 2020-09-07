@@ -1,34 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-
 class App extends Component {
   state = {
     persons: [
-      { name: 'a', age: 28 },
-      { name: 'b', age: 27 },
-      { name: 'c', age: 25 },
+      { name: 'a', age: 28, id: 'asdf' },
+      { name: 'b', age: 27, id: 'qwer' },
+      { name: 'c', age: 25, id: 'zxcv' },
     ],
     showPersons: false,
   };
 
-  switchNameHandler = newName => {
+  nameChangeHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => p.id === id);
+    const person = { ...this.state.persons[personIndex] };
+    console.log(person);
+    person.name = event.target.value;
+    const persons = [...this.state.persons];
+    console.log(persons);
+    persons[personIndex] = person;
     this.setState({
-      persons: [
-        { name: newName, age: 28 },
-        { name: 'b', age: 27 },
-        { name: 'c', age: 28 },
-      ],
-    });
-  };
-
-  nameChangeHandler = event => {
-    this.setState({
-      persons: [
-        { name: 'a', age: 28 },
-        { name: event.target.value, age: 27 },
-        { name: 'c', age: 25 },
-      ],
+      persons: persons,
     });
   };
 
@@ -36,6 +28,16 @@ class App extends Component {
     // simply changes the value of showPersons whenever the togglePersonHandler is fired
     this.setState({
       showPersons: !this.state.showPersons,
+    });
+  };
+
+  deletePersonHandler = personIndex => {
+    // copying the array using the spread operator to not mutate the state directly
+    // will not show a error without copying though but it is a better approach
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({
+      persons: persons,
     });
   };
 
@@ -52,7 +54,21 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person
+          {/* OUTPUTTING LISTS */}
+          {this.state.persons.map((person, index) => {
+            return (
+              <Person
+                name={person.name}
+                age={person.age}
+                click={() => this.deletePersonHandler(index)}
+                key={person.id}
+                // the anonymous function is what actually gets called so therefore it will have the event property can use index as well but we have id's now so use that
+                changed={event => this.nameChangeHandler(event, person.id)}
+              />
+            );
+          })}
+          {/* HARD CODED VALUES 
+					<Person
             name={this.state.persons[0].name}
             age={this.state.persons[0].age}
           />
@@ -67,7 +83,7 @@ class App extends Component {
           <Person
             name={this.state.persons[2].name}
             age={this.state.persons[2].age}
-          />
+          /> */}
         </div>
       );
     }
