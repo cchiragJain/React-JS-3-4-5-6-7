@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Radium from 'radium';
+
 class App extends Component {
   state = {
     persons: [
@@ -40,10 +42,13 @@ class App extends Component {
 
   render() {
     const buttonStyle = {
-      backgroundColor: 'white',
-      border: '3px solid green',
+      backgroundColor: 'green',
+      border: '3px solid blue',
+      padding: '5px',
+      color: 'white',
       font: 'inherit',
       cursor: 'pointer',
+      transition: '1s ease',
     };
 
     let persons = null;
@@ -64,12 +69,26 @@ class App extends Component {
           })}
         </div>
       );
+      // SETTING STYLES DYNAMICALLY
+      buttonStyle.backgroundColor = 'red';
+      buttonStyle.transition = '1s ease';
+    }
+
+    // let classes = ['red', 'bold'].join(' '); // 'red bold' like a classlist
+
+    const classes = [];
+
+    if (this.state.persons.length <= 2) {
+      classes.push('red'); // classes = ['red']
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold'); // classes = ['red','bold']
     }
 
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
-        <p>This is really working!</p>
+        <p className={classes.join(' ')}>This is really working!</p>
         <button style={buttonStyle} onClick={this.togglePersonsHandler}>
           Switch Persons
         </button>
