@@ -11,3 +11,5 @@ Use `git checkout 0ac5df` to see the radium part.
   - Conditional rendering is done by passing in the condition value as props and then using it inside the styled component by ternary conditioning
 
 Use `git checkout 51ada2` to see the styled-components part.
+
+- CSS modules not working due to dependency issues ( react-scripts version )

@@ -1,60 +1,53 @@
 import React, { Component } from 'react';
-import './App.css';
+
+import classes from './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
   state = {
     persons: [
-      { name: 'a', age: 28, id: 'asdf' },
-      { name: 'b', age: 27, id: 'qwer' },
-      { name: 'c', age: 25, id: 'zxcv' },
+      { id: 'asfa1', name: 'Max', age: 28 },
+      { id: 'vasdf1', name: 'Manu', age: 29 },
+      { id: 'asdf11', name: 'Stephanie', age: 26 },
     ],
+    otherState: 'some other value',
     showPersons: false,
   };
 
-  nameChangeHandler = (event, id) => {
-    const personIndex = this.state.persons.findIndex(p => p.id === id);
-    const person = { ...this.state.persons[personIndex] };
-    console.log(person);
-    person.name = event.target.value;
-    const persons = [...this.state.persons];
-    console.log(persons);
-    persons[personIndex] = person;
-    this.setState({
-      persons: persons,
+  nameChangedHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
     });
-  };
 
-  togglePersonsHandler = () => {
-    this.setState({
-      showPersons: !this.state.showPersons,
-    });
+    const person = {
+      ...this.state.persons[personIndex],
+    };
+
+    // const person = Object.assign({}, this.state.persons[personIndex]);
+
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({ persons: persons });
   };
 
   deletePersonHandler = personIndex => {
+    // const persons = this.state.persons.slice();
     const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
-    this.setState({
-      persons: persons,
-    });
+    this.setState({ persons: persons });
+  };
+
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({ showPersons: !doesShow });
   };
 
   render() {
-    // const buttonStyle = {
-    //   backgroundColor: 'green',
-    //   border: '3px solid blue',
-    //   padding: '5px',
-    //   color: 'white',
-    //   font: 'inherit',
-    //   cursor: 'pointer',
-    //   transition: '1s ease',
-    //   ':hover': {
-    //     backgroundColor: 'lightgreen',
-    //     color: 'black',
-    //   },
-    // };
-
     let persons = null;
+    let btnClass = '';
 
     if (this.state.showPersons) {
       persons = (
@@ -62,36 +55,39 @@ class App extends Component {
           {this.state.persons.map((person, index) => {
             return (
               <Person
+                click={() => this.deletePersonHandler(index)}
                 name={person.name}
                 age={person.age}
-                click={() => this.deletePersonHandler(index)}
                 key={person.id}
-                changed={event => this.nameChangeHandler(event, person.id)}
+                changed={event => this.nameChangedHandler(event, person.id)}
               />
             );
           })}
         </div>
       );
-    }
-    const classes = [];
 
+      btnClass = classes.Red;
+    }
+
+    const assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push('red'); // classes = ['red']
+      assignedClasses.push(classes.red); // classes = ['red']
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold'); // classes = ['red','bold']
+      assignedClasses.push(classes.bold); // classes = ['red', 'bold']
     }
 
     return (
-      <div className="App">
+      <div className={classes.App}>
         <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
-        <button className="button" onClick={this.togglePersonsHandler}>
-          Switch Persons
+        <p className={assignedClasses.join(' ')}>This is really working!</p>
+        <button className={btnClass} onClick={this.togglePersonsHandler}>
+          Toggle Persons
         </button>
         {persons}
       </div>
     );
+    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
