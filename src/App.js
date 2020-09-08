@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import Radium, { StyleRoot } from 'radium';
+import styled from 'styled-components';
+
+const StyledButton = styled.button`
+  background-color: ${props => (props.check ? 'red' : 'green')};
+  border: 3px solid blue;
+  padding: 5px;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+  transition: 1s ease;
+  /* add a & symbol in order to select the component like button:hover */
+  &:hover {
+    background-color: ${props => (props.check ? 'salmon' : 'lightgreen')};
+    color: black;
+  }
+`;
 
 class App extends Component {
   state = {
@@ -41,20 +56,19 @@ class App extends Component {
   };
 
   render() {
-    const buttonStyle = {
-      backgroundColor: 'green',
-      border: '3px solid blue',
-      padding: '5px',
-      color: 'white',
-      font: 'inherit',
-      cursor: 'pointer',
-      transition: '1s ease',
-      // USING RADIUM WE CAN ADD STYLING such as pseudo selectors hover in inline styles
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black',
-      },
-    };
+    // const buttonStyle = {
+    //   backgroundColor: 'green',
+    //   border: '3px solid blue',
+    //   padding: '5px',
+    //   color: 'white',
+    //   font: 'inherit',
+    //   cursor: 'pointer',
+    //   transition: '1s ease',
+    //   ':hover': {
+    //     backgroundColor: 'lightgreen',
+    //     color: 'black',
+    //   },
+    // };
 
     let persons = null;
 
@@ -75,12 +89,12 @@ class App extends Component {
         </div>
       );
       // SETTING STYLES DYNAMICALLY
-      buttonStyle.backgroundColor = 'red';
-      buttonStyle.transition = '1s ease';
-      buttonStyle[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black',
-      };
+      // buttonStyle.backgroundColor = 'red';
+      // buttonStyle.transition = '1s ease';
+      // buttonStyle[':hover'] = {
+      //   backgroundColor: 'salmon',
+      //   color: 'black',
+      // };
     }
 
     // let classes = ['red', 'bold'].join(' '); // 'red bold' like a classlist
@@ -95,18 +109,19 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
-        <div className="App">
-          <h1>Hi, I'm a React App</h1>
-          <p className={classes.join(' ')}>This is really working!</p>
-          <button style={buttonStyle} onClick={this.togglePersonsHandler}>
-            Switch Persons
-          </button>
-          {persons}
-        </div>
-      </StyleRoot>
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <StyledButton
+          check={this.state.showPersons}
+          onClick={this.togglePersonsHandler}
+        >
+          Switch Persons
+        </StyledButton>
+        {persons}
+      </div>
     );
   }
 }
 
-export default Radium(App);
+export default App;
