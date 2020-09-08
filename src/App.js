@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import Radium from 'radium';
+import Radium, { StyleRoot } from 'radium';
 
 class App extends Component {
   state = {
@@ -49,6 +49,11 @@ class App extends Component {
       font: 'inherit',
       cursor: 'pointer',
       transition: '1s ease',
+      // USING RADIUM WE CAN ADD STYLING such as pseudo selectors hover in inline styles
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black',
+      },
     };
 
     let persons = null;
@@ -72,10 +77,14 @@ class App extends Component {
       // SETTING STYLES DYNAMICALLY
       buttonStyle.backgroundColor = 'red';
       buttonStyle.transition = '1s ease';
+      buttonStyle[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black',
+      };
     }
 
     // let classes = ['red', 'bold'].join(' '); // 'red bold' like a classlist
-
+    // SETTING CLASSES DYNAMICALLY
     const classes = [];
 
     if (this.state.persons.length <= 2) {
@@ -86,16 +95,18 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
-        <button style={buttonStyle} onClick={this.togglePersonsHandler}>
-          Switch Persons
-        </button>
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi, I'm a React App</h1>
+          <p className={classes.join(' ')}>This is really working!</p>
+          <button style={buttonStyle} onClick={this.togglePersonsHandler}>
+            Switch Persons
+          </button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
