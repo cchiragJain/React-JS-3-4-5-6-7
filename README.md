@@ -14,3 +14,5 @@ Use `git checkout 51ada2` to see the styled-components part.
 
 - CSS modules can use natively in React (react-scripts version > 2)
   - Scopes CSS locally to the components
+
+Use `git checkout section-5-...` to see the css modules part.
