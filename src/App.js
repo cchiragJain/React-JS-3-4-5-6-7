@@ -1,22 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import styled from 'styled-components';
-
-const StyledButton = styled.button`
-  background-color: ${props => (props.check ? 'red' : 'green')};
-  border: 3px solid blue;
-  padding: 5px;
-  color: white;
-  font: inherit;
-  cursor: pointer;
-  transition: 1s ease;
-  /* add a & symbol in order to select the component like button:hover */
-  &:hover {
-    background-color: ${props => (props.check ? 'salmon' : 'lightgreen')};
-    color: black;
-  }
-`;
 
 class App extends Component {
   state = {
@@ -88,17 +72,7 @@ class App extends Component {
           })}
         </div>
       );
-      // SETTING STYLES DYNAMICALLY
-      // buttonStyle.backgroundColor = 'red';
-      // buttonStyle.transition = '1s ease';
-      // buttonStyle[':hover'] = {
-      //   backgroundColor: 'salmon',
-      //   color: 'black',
-      // };
     }
-
-    // let classes = ['red', 'bold'].join(' '); // 'red bold' like a classlist
-    // SETTING CLASSES DYNAMICALLY
     const classes = [];
 
     if (this.state.persons.length <= 2) {
@@ -112,12 +86,9 @@ class App extends Component {
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p className={classes.join(' ')}>This is really working!</p>
-        <StyledButton
-          check={this.state.showPersons}
-          onClick={this.togglePersonsHandler}
-        >
+        <button className="button" onClick={this.togglePersonsHandler}>
           Switch Persons
-        </StyledButton>
+        </button>
         {persons}
       </div>
     );
