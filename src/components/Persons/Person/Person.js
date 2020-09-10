@@ -1,15 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './Person.module.css';
 
-const person = props => {
-  return (
-    <div className={classes.Person}>
-      <p onClick={props.clicked}>
-        I'm {props.name} and I am {props.age} years old!
-      </p>
-      <input type="text" onChange={props.changed} value={props.name} />
-    </div>
-  );
-};
+class Person extends Component {
+  constructor(props) {
+    super(props);
+    this.inputElementRef = React.createRef();
+  }
 
-export default person;
+  componentDidMount() {
+    // this.inputElement.focus();
+    this.inputElementRef.current.focus();
+  }
+
+  render() {
+    console.log('person.js rendering');
+    return (
+      <div className={classes.Person}>
+        <p onClick={this.props.clicked}>
+          I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <input
+          // ref={inputEl => (this.inputElement = inputEl)}
+          ref={this.inputElementRef}
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </div>
+    );
+  }
+}
+
+export default Person;

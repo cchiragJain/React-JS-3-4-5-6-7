@@ -1,0 +1,30 @@
+.red {
+  color: red;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.CockPit button {
+  background-color: green;
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+  transition: 1s ease-in-out;
+}
+
+.CockPit button:hover {
+  background-color: lightgreen;
+  color: black;
+}
+
+.CockPit button.Red {
+  background-color: red;
+}
+
+.CockPit button.Red:hover {
+  background-color: salmon;
+}
