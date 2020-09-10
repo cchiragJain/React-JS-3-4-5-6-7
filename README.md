@@ -27,3 +27,9 @@ Use `git checkout 51ada2` to see the styled-components part.
   - Scopes CSS locally to the components
 
 Use `git checkout section-5-...` to see the css modules part
+
+# Section-7 ( React Internals )
+
+- Refer the README.md file for notes on lifecycle hooks and refs for DOM access.
+
+Use `git checkout section-7-...` to see the file.
